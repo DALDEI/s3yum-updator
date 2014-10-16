@@ -176,7 +176,7 @@ def main(options, args):
                 for message in messages:
                     body = json.loads(message.get_body())
                     repopath = str(body.get('Subject', options.repopath))
-                    pkgmap[repopath].append(str(body['Message']))
+                    pkgmap[repopath].extend(str(body['Message']).split())
                 for repopath, rpmfiles in pkgmap.items():
                     logging.info('updating: %s: %r', repopath, rpmfiles)
                     try:

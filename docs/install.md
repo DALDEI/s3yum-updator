@@ -14,10 +14,12 @@ sleep 30
 aws cloudformation describe-stacks --stack-name packages --output text
 ```
 
+You might want to change the configuration if using IAM roles on EC2 - see below.
+
 ## Initialize repositories on S3
 
 The `repoupdate-daemon` can manage multiple yum repositories on S3 and doesn't need a local copy.
-However the existing or new repositories do need to be copied to S3. To create an empty repository
+However existing or new repositories do need to be copied to S3. To create an empty repository
 for `development/x86_64` on the packages bucket use:
 
 ```sh
@@ -78,8 +80,9 @@ yum --disablerepo \* --enablerepo example list --showduplicates available
 
 ## yum-s3-iam
 
-Rather than using a public repository, it's more likely that you'll want to keep your packages private
-and access the content with the S3 protocol. To do that install the `s3iam` plugin.
+Rather than using a public repository, it's more likely that you'll want to keep your
+packages private and access the content with the S3 protocol.
+To do that install the [s3iam](https://github.com/seporaitis/yum-s3-iam) plugin for yum.
 
 ```sh
 git clone git@github.com:seporaitis/yum-s3-iam.git

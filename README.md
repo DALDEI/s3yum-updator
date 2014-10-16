@@ -21,14 +21,13 @@ each package.
 
 ---
 
-For full step-by-step installation instructions see [docs/install.md](docs/install.md)
-and [docs/cloudformation.json](docs/cloudformation.json).
-
 Install
 -------
 
-You can use the included spec file to build an rpm and then `yum localinstall`
-it.
+Use `make install` to build an rpm and install it locally.
+
+For full step-by-step installation instructions see [docs/install.md](docs/install.md).
+
 
 Configure
 ---------
@@ -43,23 +42,25 @@ Override default options:
 The daemon uses standard boto configuation to access the AWS credentials: IAM
 role, environment variables, or boto config file.
 
+A complete example of the AWS configuration, including permissions required, is
+documented in the provided CloudFormation stack template: [docs/cloudformation.json](docs/cloudformation.json).
+
 Run
 ---
 
     service repoupdate-daemon start
 
-Test
-----
+Publish
+-------
 
     publish-packages --bucket mybucket --sns-topic mytopic *.rpm
 
----
+Integrate
+---------
 
-Related Tools
--------------
+For instructions for integrating with Jenkins see [docs/jenkins.md](docs/jenkins.md).
 
-https://github.com/seporaitis/yum-s3-iam
+Test
+----
 
-https://wiki.jenkins-ci.org/display/JENKINS/S3+Plugin
-
-https://wiki.jenkins-ci.org/display/JENKINS/Amazon+SNS+Notifier
+    make test
