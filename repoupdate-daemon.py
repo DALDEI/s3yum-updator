@@ -85,6 +85,19 @@ class S3Grabber(object):
                 key.delete()
 
 
+def upload_rpmfiles(rpmfiles, options):
+    bucket = boto.connect_s3().get_bucket(options.bucket)
+    processed = []
+    for filename in rpmfiles:
+        if os.path.exists(filename):
+            basename = os.path.basename(filename)
+            key = bucket.new_key(os.path.join(options.repopath, basename))
+            key.set_contents_from_filename(filename)
+            filename = basename
+        processed.append(filename)
+    return processed
+
+
 def update_repodata(repopath, rpmfiles, options):
     tmpdir = tempfile.mkdtemp()
     s3base = urlparse.urlunsplit(('s3', options.bucket, repopath, '', ''))
@@ -149,7 +162,9 @@ def main(options, args):
     )
 
     if args and not options.sqs_name:
-        return update_repodata(options.repopath, args, options)
+        # Process rpm files directly
+        rpmfiles = upload_rpmfiles(args, options)
+        return update_repodata(options.repopath, rpmfiles, options)
 
     conn = boto.sqs.connect_to_region(options.region)
     queue = conn.get_queue(options.sqs_name)
