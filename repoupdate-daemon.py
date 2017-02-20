@@ -214,7 +214,7 @@ def main(options, args):
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('-b', '--bucket', default='packages.example.com')
-    parser.add_option('-p', '--repopath', default='development/x86_64')
+    parser.add_option('-p', '--repopath', default='x86_64')
     parser.add_option('-r', '--region', default='us-east-1')
     parser.add_option('-q', '--sqs-name')
     parser.add_option('-k', '--keep', type='int', default=2,

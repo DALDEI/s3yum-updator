@@ -44,7 +44,7 @@ $(SOURCE0): $(RPMDIR)
 $(RPMDIR):
 	@mkdir $@
 
-aws-resources: docs/cloudformation.json
+aws-resources: docs/marklogic.json
 	aws cloudformation create-stack --stack-name packages \
 		--template-body "`cat $<`" \
 		--capabilities CAPABILITY_IAM \

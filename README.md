@@ -19,6 +19,8 @@ notify the update daemon.
 By default the daemon is configured to keep only the last two versions of
 each package.
 
+NOTE: This is not safe to run concurrently.  Use only 1 daemon per repo at a time.
+
 ---
 
 Install
